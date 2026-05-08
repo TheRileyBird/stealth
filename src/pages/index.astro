@@ -27,19 +27,19 @@ const highlights = [
     eyebrow: 'Purification',
     stat: '99.9%',
     title: 'Contaminants removed.',
-    body: 'Multi-stage filtration helps reduce chlorine, heavy metals, microplastics, and hundreds of everyday water concerns.',
+    body: 'Three-stage filtration targets chemicals, heavy metals, microplastics, chlorine, chloramine, fluoride, and other everyday tap-water contaminants.',
     dark: true,
   },
   {
     eyebrow: 'Mineralization',
     title: 'Alive, not just clean.',
-    body: 'Stealth restores a mineral-balanced profile after filtration for water that tastes crisp and feels complete.',
+    body: 'Stealth filters aggressively while preserving naturally occurring source minerals like magnesium, potassium, and calcium for a cleaner water profile that still feels complete.',
     blue: true,
   },
   {
     eyebrow: 'Smart guidance',
     title: 'It learns your water.',
-    body: 'Simple monitoring keeps water quality and filter life visible without turning hydration into homework.',
+    body: 'Live quality indicators track output and filter life, so the system stays easy to understand without turning hydration into homework.',
   },
   {
     eyebrow: 'Daily impact',
@@ -51,18 +51,37 @@ const highlights = [
 ];
 
 const numbers = [
-  { value: '6x', label: 'Stage filtration process for more complete daily water.' },
+  { value: '6x', label: 'Core stages across purification, reconstruction, and final balancing.' },
   { value: '99.9%', label: 'Targeted contaminant reduction through layered filtration.' },
-  { value: '8+', label: 'Mineral and performance markers balanced for taste.' },
+  { value: '8+', label: 'Mineral and performance markers tracked for taste and output quality.' },
 ];
 
 const stages = [
-  'Sediment pre-filter',
-  'Activated carbon block',
-  'Reverse osmosis membrane',
-  'Mineral restoration stage',
-  'pH balancing',
-  'UV sterilization',
+  'Strip: 3-stage super filtration',
+  'Bypass: beneficial minerals remain',
+  'Reconstruct: charged plate chambers',
+  'Zap: millivolt polishing',
+  'Cluster: active hydrogen line',
+  'Balance: final mineral profile',
+];
+
+const techPrinciples = [
+  {
+    title: 'Step 1: Purification',
+    body: 'STEALTH uses three super filters to strip contaminants from municipal source water, targeting chemicals, heavy metals, microplastics, chlorine, chloramine, fluoride, herbicides, lead, mercury, nitrates, pharmaceuticals, and more.',
+  },
+  {
+    title: 'Step 2: Bypass miracle',
+    body: 'While contaminants are filtered out, naturally occurring beneficial minerals are allowed to remain in the water, including magnesium, potassium, and calcium.',
+  },
+  {
+    title: 'Step 3: Reconstruct',
+    body: 'Filtered water enters electrically charged platinum and titanium plate chambers where millivolt energy is used to further polish the water and separate rejected output from the high-density drinking line.',
+  },
+  {
+    title: 'Step 4: Supercharge finish',
+    body: 'The final stage is designed around ORP shifts, active hydrogen, and clustered water behavior to create a crisp, mineral-balanced finish.',
+  },
 ];
 
 const stageColors = [
@@ -268,61 +287,66 @@ const isNumberToken = (value) => /\d/.test(value);
       <Image
         src={water}
         alt=""
-        class="water-backdrop absolute inset-0 h-full w-full object-cover"
+        class="water-backdrop absolute inset-0 h-full w-full object-cover object-top"
         widths={[960, 1440, 1920]}
         sizes="100vw"
       />
       <div class="hero-grain absolute inset-0 opacity-20 mix-blend-overlay"></div>
-      <div class="absolute bg-gradient-to-br from-black via-black/90 to-blue-950/80"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-black/40"></div>
+      <div class="absolute bg-gradient-to-br from-black via-black/90 to-blue-950/0"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/40"></div>
       <div class="absolute inset-0 bg-[radial-gradient(circle_at_78%_35%,rgba(59,130,246,0.28),transparent_34%),linear-gradient(to_bottom,rgba(0,0,0,0.35),rgba(0,0,0,0.92))]"></div>
 
-      <div class="relative mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
-        <div>
+      <div class="relative mx-auto max-w-7xl">
+        <div class="max-w-4xl">
           <p class="text-xs font-semibold uppercase tracking-[0.18em] text-white/45">The engine inside</p>
           <h2 class="mt-3 text-4xl font-black uppercase tracking-wide sm:text-6xl">
             Water <span class="text-gradient">reimagined</span>
           </h2>
           <p class="mt-5 max-w-xl text-lg leading-8 text-white/60">
-            Six carefully engineered stages transform everyday water into a cleaner,
-            mineral-balanced daily habit. No bottles. No hauling. No clutter.
+            In May 2014, STEALTH technology reached its first major breakthrough:
+            a reconstruction process built around ORP shifts, millivolt energy,
+            active hydrogen, and deeply clustered water behavior.
           </p>
-
-          <ul class="mt-10 divide-y divide-white/10">
-            {
-              stages.slice(0, 5).map((stage) => (
-                <li class="flex gap-4 py-5">
-                  <span class="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-600/15 text-blue-500">
-                    <Check class="h-4 w-4" />
-                  </span>
-                  <div>
-                    <strong class="block text-base font-semibold text-white">{stage}</strong>
-                    <p class="mt-1 text-sm leading-6 text-white/55">
-                      A focused stage in the system that helps refine taste, quality, and confidence.
-                    </p>
-                  </div>
-                </li>
-              ))
-            }
-          </ul>
         </div>
 
-        <div>
-          <p class="mb-4 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-white/30">Filtration stages</p>
-          <div class="grid gap-1.5">
-            {
-              stages.map((stage, index) => (
-                <div class:list={['rounded-xl px-5 py-4 text-sm font-medium text-white transition hover:translate-x-2', stageColors[index]]}>
-                  Stage {index + 1} — {stage}
-                </div>
-              ))
-            }
+        <div class="mt-14 grid gap-8 lg:grid-cols-2 lg:items-center">
+          <div>
+            <ul class="divide-y divide-white/10">
+              {
+                techPrinciples.map((item) => (
+                  <li class="flex gap-4 py-5">
+                    <span class="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-600/15 text-blue-500">
+                      <Check class="h-4 w-4" />
+                    </span>
+                    <div>
+                      <strong class="block text-base font-semibold text-white">{item.title}</strong>
+                      <p class="mt-1 text-sm leading-6 text-white/55">
+                        {item.body}
+                      </p>
+                    </div>
+                  </li>
+                ))
+              }
+            </ul>
           </div>
-          <div class="mt-7 grid grid-cols-2 gap-4 rounded-2xl border border-white/10 bg-white/10 p-6 text-center sm:grid-cols-4">
-            <div><p class="font-number text-gradient text-3xl tracking-wide">≤10</p><p class="mt-1 text-[11px] text-white/40">TDS ppm</p></div>
-            <div><p class="font-number text-gradient text-3xl tracking-wide">7.8</p><p class="mt-1 text-[11px] text-white/40">pH level</p></div>
-            <div><p class="font-number text-gradient text-3xl tracking-wide">-150</p><p class="mt-1 text-[11px] text-white/40">ORP mV</p></div>
-            <div><p class="font-number text-gradient text-3xl tracking-wide">0</p><p class="mt-1 text-[11px] text-white/40">Bottles</p></div>
+
+          <div class="rounded-[1.25rem] border border-white/10 bg-black/35 p-6 backdrop-blur-sm sm:p-8">
+            <p class="mb-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/30">Filtration stages</p>
+            <div class="grid gap-1.5">
+              {
+                stages.map((stage, index) => (
+                  <div class:list={['rounded-xl px-5 py-4 text-sm font-medium text-white transition hover:translate-x-2', stageColors[index]]}>
+                    Stage {index + 1} — {stage}
+                  </div>
+                ))
+              }
+            </div>
+            <div class="mt-7 grid grid-cols-2 gap-4 rounded-2xl border border-white/10 bg-white/10 p-6 text-center sm:grid-cols-4">
+              <div><p class="font-number text-gradient text-3xl tracking-wide">≤10</p><p class="mt-1 text-[11px] text-white/40">TDS ppm</p></div>
+              <div><p class="font-number text-gradient text-3xl tracking-wide">7.8</p><p class="mt-1 text-[11px] text-white/40">pH level</p></div>
+              <div><p class="font-number text-gradient text-3xl tracking-wide">-150</p><p class="mt-1 text-[11px] text-white/40">ORP mV</p></div>
+              <div><p class="font-number text-gradient text-3xl tracking-wide">0</p><p class="mt-1 text-[11px] text-white/40">Bottles</p></div>
+            </div>
           </div>
         </div>
       </div>
@@ -330,15 +354,11 @@ const isNumberToken = (value) => /\d/.test(value);
 
     <section class="bg-zinc-100 px-5 py-24 text-zinc-950 sm:px-8">
       <div class="relative mx-auto max-w-7xl">
-        <div class="mx-auto mb-16 max-w-2xl text-center">
+        <div class="mx-auto mb-10 max-w-2xl text-center">
           <p class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Designed for life</p>
           <h2 class="mt-3 text-4xl font-black uppercase tracking-wide sm:text-6xl">
-            Built for daily use, not occasional wellness.
+            Built for wellness
           </h2>
-          <p class="mt-5 text-lg leading-8 text-zinc-500">
-            Stealth sits in your home and works quietly. Fill a glass, bottle, or pot.
-            Better water, always ready.
-          </p>
         </div>
 
         <div class="grid gap-3 md:grid-cols-2">
@@ -354,7 +374,7 @@ const isNumberToken = (value) => /\d/.test(value);
             <div class="relative">
             <p class="text-xs font-semibold uppercase tracking-[0.16em] text-white/45">Installation</p>
             <h3 class="mt-4 text-3xl font-bold uppercase tracking-wide"><span class="text-gradient">Zero</span> plumber required.</h3>
-            <p class="mt-4 text-sm text-white/60">Designed for a direct setup path without turning your kitchen into a jobsite.</p>
+            <p class="mt-4 text-sm text-white/60">Designed for a direct setup path without turning your kitchen into a jobsite. Get the S1000 in place, connect the system, and start producing mineral-balanced water at home.</p>
             <a href="#pricing" class="mt-6 inline-flex items-center gap-1 text-sm font-medium text-white/75 hover:text-white hover:underline">
               Get started
               <ChevronRight class="h-4 w-4" />
@@ -369,7 +389,7 @@ const isNumberToken = (value) => /\d/.test(value);
                 <p class="text-xs font-semibold uppercase tracking-[0.16em] text-white/45">Smart monitoring</p>
                 <h3 class="mt-4 text-3xl font-bold uppercase tracking-wide">Your water, in real time.</h3>
                 <p class="mt-4 max-w-xl text-sm text-white/60">
-                  Simple quality indicators make the system feel calm and premium instead of technical.
+                  Simple quality indicators show output, filter life, and performance markers so you can see when the system is stripping, balancing, and ready to pour.
                 </p>
               </div>
               <div class="grid grid-cols-2 gap-3">
