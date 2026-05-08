@@ -9,3 +9,39 @@
   font-style: normal;
   font-display: swap;
 }
+
+.hero-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+.water-backdrop {
+  opacity: 0.62;
+  object-position: 72% 48%;
+  transform: scale(1.08);
+  filter: brightness(0.62) contrast(1.28) saturate(1.35);
+}
+
+.font-number {
+  font-family: 'Organetto Bold Semi Exp', Organetto, 'Cindie Mono D', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Spem, monospace;
+  font-weight: 600;
+}
+
+.text-gradient {
+  background-image: linear-gradient(90deg, #a5f3fc, #3b82f6, #a78bfa, #22d3ee, #a5f3fc);
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-shift 7s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}

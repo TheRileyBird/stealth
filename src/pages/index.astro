@@ -37,15 +37,15 @@ const highlights = [
     blue: true,
   },
   {
+    eyebrow: 'Smart guidance',
+    title: 'It learns your water.',
+    body: 'Simple monitoring keeps water quality and filter life visible without turning hydration into homework.',
+  },
+  {
     eyebrow: 'Daily impact',
     stat: '0',
     title: 'Plastic bottles. Ever again.',
     body: 'Replace the bottled-water routine with a system built for the counter, the kitchen, and the whole household.',
-  },
-  {
-    eyebrow: 'Smart guidance',
-    title: 'It learns your water.',
-    body: 'Simple monitoring keeps water quality and filter life visible without turning hydration into homework.',
     dark: true,
   },
 ];
@@ -63,6 +63,15 @@ const stages = [
   'Mineral restoration stage',
   'pH balancing',
   'UV sterilization',
+];
+
+const stageColors = [
+  'bg-cyan-600',
+  'bg-cyan-700',
+  'bg-blue-700',
+  'bg-blue-800',
+  'bg-blue-900',
+  'bg-indigo-950',
 ];
 
 const included = [
@@ -90,6 +99,10 @@ const plans = [
     features: ['Everything in S1000', 'Higher-flow configuration', 'Priority support', '$250 charity donation option'],
   },
 ];
+
+const numberTokenPattern = /(\$?\d+(?:[.,]\d+)?%?\+?)/g;
+const textParts = (value) => String(value).split(numberTokenPattern).filter(Boolean);
+const isNumberToken = (value) => /\d/.test(value);
 ---
 
 <BaseLayout title="Stealth Detox Water — Water, reimagined.">
@@ -112,7 +125,7 @@ const plans = [
     x-init="updateHero(); window.addEventListener('scroll', () => requestAnimationFrame(() => updateHero()), { passive: true })"
     class="bg-black font-sans text-white"
   >
-    <header class="sticky top-0 z-50 border-b border-white/10 bg-black/90 backdrop-blur-xl">
+    <header class="sticky top-0 z-50 border-b border-white/10 bg-[#050706] backdrop-blur-xl">
       <div class="mx-auto flex h-14 max-w-7xl items-center justify-between px-5 sm:px-8">
         <a href="#hero" class="flex items-center gap-3 text-sm font-semibold tracking-tight text-white">
           <Image src={logo} alt="Stealth Detox Water" class="h-auto w-28" loading="eager" />
@@ -164,14 +177,14 @@ const plans = [
       </div>
     </header>
 
-    <section id="hero" class="relative flex min-h-[calc(100vh-3.5rem)] items-center justify-center overflow-hidden px-5 py-20 text-center sm:px-8">
+    <section id="hero" class="relative flex min-h-[calc(100vh-3.5rem)] items-start justify-center overflow-hidden px-5 pb-0 pt-20 text-center sm:px-8">
       <div class="absolute left-1/2 top-[40%] h-[44rem] w-[44rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600/10 blur-3xl"></div>
       <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black to-transparent"></div>
 
-      <div class="relative mx-auto flex max-w-6xl flex-col items-center">
+      <div class="relative mx-auto flex min-h-[calc(100vh-8.5rem)] max-w-6xl flex-col items-center">
         <p class="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">Introducing</p>
-        <h1 class="bg-gradient-to-b from-white via-white to-white/50 bg-clip-text font-display text-7xl font-normal uppercase tracking-wide text-transparent sm:text-8xl lg:text-9xl">
-          Stealth.
+        <h1 class="bg-gradient-to-b from-white via-white to-white/50 bg-clip-text font-display text-6xl font-normal uppercase leading-none tracking-wide text-transparent sm:text-7xl lg:text-[5rem]">
+          Stealth
         </h1>
         <p class="mt-4 text-2xl font-normal tracking-tight text-white/70 sm:text-3xl">
           Water, the way nature intended.
@@ -187,46 +200,35 @@ const plans = [
           >
             Shop Now
           </a>
-          <a href="#highlights" class="inline-flex items-center gap-1 text-base font-normal text-blue-500 hover:underline">
-            Learn more
-            <ChevronRight class="h-4 w-4" />
-          </a>
+          <!--<a href="#highlights" class="inline-flex items-center gap-1 text-base font-normal text-blue-500 hover:underline">-->
+          <!--  Learn more-->
+          <!--  <ChevronRight class="h-4 w-4" />-->
+          <!--</a>-->
         </div>
 
-        <div class="relative mt-16 w-full max-w-md">
+        <div class="relative mt-10 flex flex-1 w-full max-w-lg items-end">
           <div class="absolute inset-x-10 bottom-2 h-20 rounded-full bg-black blur-3xl"></div>
           <div class="absolute inset-x-16 top-8 h-28 rounded-full bg-blue-500/20 blur-3xl"></div>
           <div
             class="relative will-change-transform"
-            x-bind:style="`transform: perspective(1200px) rotateY(${heroProgress * -16}deg) rotateX(${heroProgress * 6}deg) translate3d(${heroProgress * -18}px, ${heroProgress * 48}px, 0) scale(${1 - heroProgress * 0.04}); transform-origin: 50% 58%;`"
+            x-bind:style="`transform: translateX(42px) scale(${1 + heroProgress * 1.05}); transform-origin: 50% 8%;`"
           >
             <Image
               src={s1000}
               alt="Stealth S1000 water system"
-              class="mx-auto h-auto w-full max-w-[18rem] drop-shadow-[0_44px_80px_rgba(0,0,0,0.85)] sm:max-w-[22rem]"
+              class="mx-auto h-auto w-full max-w-[21rem] drop-shadow-[0_44px_80px_rgba(0,0,0,0.85)] sm:max-w-[26rem]"
               loading="eager"
             />
           </div>
         </div>
       </div>
-
-      <div class="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/25">
-        <span>Scroll</span>
-        <span class="h-9 w-px bg-gradient-to-b from-white/40 to-transparent"></span>
-      </div>
-    </section>
-
-    <section class="border-t border-white/10 bg-black px-5 py-24 text-center sm:px-8">
-      <h2 class="mx-auto max-w-3xl font-display text-4xl font-normal uppercase tracking-wide text-white sm:text-6xl">
-        Pure water, <span class="bg-gradient-to-r from-cyan-200 via-blue-500 to-violet-400 bg-clip-text text-transparent">reimagined</span> for the modern home.
-      </h2>
     </section>
 
     <section id="highlights" class="bg-zinc-100 px-5 py-24 text-zinc-950 sm:px-8">
       <div class="mx-auto max-w-7xl">
         <div class="mb-16 text-center" x-data="{ visible: false }" x-intersect.once="visible = true" x-bind:class="visible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'" class="transition duration-700">
           <p class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">What Stealth does</p>
-          <h2 class="mt-3 font-display text-4xl font-normal uppercase tracking-wide sm:text-6xl">
+          <h2 class="mt-3 text-4xl font-black uppercase tracking-wide sm:text-6xl">
             Built different.<br />Filtered better.
           </h2>
         </div>
@@ -246,9 +248,9 @@ const plans = [
                 <p class:list={['mb-3 text-xs font-semibold uppercase tracking-[0.16em]', item.dark || item.blue ? 'text-white/45' : 'text-zinc-500']}>
                   {item.eyebrow}
                 </p>
-                {item.stat && <p class="text-7xl font-bold tracking-[-0.06em]">{item.stat}</p>}
-                <h3 class="mt-4 font-display text-3xl font-normal uppercase tracking-wide">{item.title}</h3>
-                <p class:list={['mt-4 text-sm leading-7', item.dark || item.blue ? 'text-white/60' : 'text-zinc-500']}>{item.body}</p>
+                {item.stat && <p class="font-number text-gradient text-7xl tracking-wide">{item.stat}</p>}
+                <h3 class="mt-4 text-3xl font-bold uppercase tracking-wide">{item.title}</h3>
+                <p class:list={['mt-4 text-sm', item.dark || item.blue ? 'text-white/60' : 'text-zinc-500']}>{item.body}</p>
                 {item.blue && (
                   <a href="#tech" class="mt-6 inline-flex items-center gap-1 text-sm font-medium text-blue-400 hover:underline">
                     Learn the science
@@ -262,31 +264,24 @@ const plans = [
       </div>
     </section>
 
-    <section id="performance" class="bg-white text-zinc-950">
-      <div class="px-5 py-24 text-center sm:px-8">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">By the numbers</p>
-        <h2 class="mx-auto mt-3 max-w-xl font-display text-4xl font-normal uppercase tracking-wide sm:text-6xl">
-          Numbers that speak for themselves.
-        </h2>
-      </div>
-      <div class="grid gap-px bg-zinc-200 sm:grid-cols-3">
-        {
-          numbers.map((item) => (
-            <div class="bg-white px-8 py-14 text-center">
-              <p class="text-6xl font-bold tracking-[-0.06em] sm:text-7xl">{item.value}</p>
-              <p class="mx-auto mt-4 max-w-48 text-sm leading-6 text-zinc-500">{item.label}</p>
-            </div>
-          ))
-        }
-      </div>
-    </section>
+    <section id="tech" class="relative overflow-hidden bg-black px-5 py-24 text-white sm:px-8">
+      <Image
+        src={water}
+        alt=""
+        class="water-backdrop absolute inset-0 h-full w-full object-cover"
+        widths={[960, 1440, 1920]}
+        sizes="100vw"
+      />
+      <div class="hero-grain absolute inset-0 opacity-20 mix-blend-overlay"></div>
+      <div class="absolute bg-gradient-to-br from-black via-black/90 to-blue-950/80"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-black/40"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_78%_35%,rgba(59,130,246,0.28),transparent_34%),linear-gradient(to_bottom,rgba(0,0,0,0.35),rgba(0,0,0,0.92))]"></div>
 
-    <section id="tech" class="bg-black px-5 py-24 text-white sm:px-8">
-      <div class="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
+      <div class="relative mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
         <div>
           <p class="text-xs font-semibold uppercase tracking-[0.18em] text-white/45">The engine inside</p>
-          <h2 class="mt-3 font-display text-4xl font-normal uppercase tracking-wide sm:text-6xl">
-            Never buy or haul bottled water again.
+          <h2 class="mt-3 text-4xl font-black uppercase tracking-wide sm:text-6xl">
+            Water <span class="text-gradient">reimagined</span>
           </h2>
           <p class="mt-5 max-w-xl text-lg leading-8 text-white/60">
             Six carefully engineered stages transform everyday water into a cleaner,
@@ -317,34 +312,27 @@ const plans = [
           <div class="grid gap-1.5">
             {
               stages.map((stage, index) => (
-                <div class="rounded-xl bg-blue-600 px-5 py-4 text-sm font-medium text-white transition hover:translate-x-2" style={`opacity: ${1 - index * 0.12}`}>
+                <div class:list={['rounded-xl px-5 py-4 text-sm font-medium text-white transition hover:translate-x-2', stageColors[index]]}>
                   Stage {index + 1} — {stage}
                 </div>
               ))
             }
           </div>
-          <div class="mt-7 grid grid-cols-2 gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 text-center sm:grid-cols-4">
-            <div><p class="text-3xl font-bold">≤10</p><p class="mt-1 text-[11px] text-white/40">TDS ppm</p></div>
-            <div><p class="text-3xl font-bold">7.8</p><p class="mt-1 text-[11px] text-white/40">pH level</p></div>
-            <div><p class="text-3xl font-bold">-150</p><p class="mt-1 text-[11px] text-white/40">ORP mV</p></div>
-            <div><p class="text-3xl font-bold">0</p><p class="mt-1 text-[11px] text-white/40">Bottles</p></div>
+          <div class="mt-7 grid grid-cols-2 gap-4 rounded-2xl border border-white/10 bg-white/10 p-6 text-center sm:grid-cols-4">
+            <div><p class="font-number text-gradient text-3xl tracking-wide">≤10</p><p class="mt-1 text-[11px] text-white/40">TDS ppm</p></div>
+            <div><p class="font-number text-gradient text-3xl tracking-wide">7.8</p><p class="mt-1 text-[11px] text-white/40">pH level</p></div>
+            <div><p class="font-number text-gradient text-3xl tracking-wide">-150</p><p class="mt-1 text-[11px] text-white/40">ORP mV</p></div>
+            <div><p class="font-number text-gradient text-3xl tracking-wide">0</p><p class="mt-1 text-[11px] text-white/40">Bottles</p></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="relative overflow-hidden bg-zinc-100 px-5 py-24 text-zinc-950 sm:px-8">
-      <Image
-        src={water}
-        alt=""
-        class="absolute -right-32 top-16 hidden h-[34rem] w-[34rem] rounded-full object-cover opacity-20 lg:block"
-        widths={[640, 960]}
-        sizes="34rem"
-      />
+    <section class="bg-zinc-100 px-5 py-24 text-zinc-950 sm:px-8">
       <div class="relative mx-auto max-w-7xl">
         <div class="mx-auto mb-16 max-w-2xl text-center">
           <p class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Designed for life</p>
-          <h2 class="mt-3 font-display text-4xl font-normal uppercase tracking-wide sm:text-6xl">
+          <h2 class="mt-3 text-4xl font-black uppercase tracking-wide sm:text-6xl">
             Built for daily use, not occasional wellness.
           </h2>
           <p class="mt-5 text-lg leading-8 text-zinc-500">
@@ -356,36 +344,53 @@ const plans = [
         <div class="grid gap-3 md:grid-cols-2">
           <article class="rounded-[1.25rem] bg-white p-10">
             <p class="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">Capacity</p>
-            <p class="mt-3 text-7xl font-bold tracking-[-0.06em]">50</p>
-            <h3 class="mt-4 font-display text-3xl font-normal uppercase tracking-wide">Gallons per day.</h3>
-            <p class="mt-4 text-sm leading-7 text-zinc-500">Enough for family drinking, cooking, coffee, and refills.</p>
+            <p class="mt-3 font-number text-gradient text-7xl tracking-wide">50</p>
+            <h3 class="mt-4 text-3xl font-bold uppercase tracking-wide">Gallons per day.</h3>
+            <p class="mt-4 text-sm text-zinc-500">Enough for family drinking, cooking, coffee, and refills.</p>
           </article>
-          <article class="rounded-[1.25rem] bg-zinc-900 p-10 text-white">
+          <article class="relative overflow-hidden rounded-[1.25rem] bg-zinc-900 p-10 text-white">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_85%_20%,rgba(59,130,246,0.34),transparent_36%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_38%)]"></div>
+            <div class="hero-grain absolute inset-0 opacity-[0.08] mix-blend-overlay"></div>
+            <div class="relative">
             <p class="text-xs font-semibold uppercase tracking-[0.16em] text-white/45">Installation</p>
-            <h3 class="mt-4 font-display text-3xl font-normal uppercase tracking-wide">Zero plumber required.</h3>
-            <p class="mt-4 text-sm leading-7 text-white/60">Designed for a direct setup path without turning your kitchen into a jobsite.</p>
+            <h3 class="mt-4 text-3xl font-bold uppercase tracking-wide"><span class="text-gradient">Zero</span> plumber required.</h3>
+            <p class="mt-4 text-sm text-white/60">Designed for a direct setup path without turning your kitchen into a jobsite.</p>
             <a href="#pricing" class="mt-6 inline-flex items-center gap-1 text-sm font-medium text-white/75 hover:text-white hover:underline">
               Get started
               <ChevronRight class="h-4 w-4" />
             </a>
+            </div>
           </article>
-          <article class="rounded-[1.25rem] bg-white p-10 md:col-span-2">
-            <div class="grid gap-10 lg:grid-cols-[1fr_24rem] lg:items-center">
+          <article class="relative overflow-hidden rounded-[1.25rem] bg-zinc-950 p-10 text-white shadow-sm ring-1 ring-white/10 md:col-span-2">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_82%_20%,rgba(59,130,246,0.34),transparent_32%),linear-gradient(135deg,rgba(165,243,252,0.12),transparent_34%)]"></div>
+            <div class="hero-grain absolute inset-0 opacity-[0.05] mix-blend-overlay"></div>
+            <div class="relative grid gap-10 lg:grid-cols-[1fr_24rem] lg:items-center">
               <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">Smart monitoring</p>
-                <h3 class="mt-4 font-display text-3xl font-normal uppercase tracking-wide">Your water, in real time.</h3>
-                <p class="mt-4 max-w-xl text-sm leading-7 text-zinc-500">
+                <p class="text-xs font-semibold uppercase tracking-[0.16em] text-white/45">Smart monitoring</p>
+                <h3 class="mt-4 text-3xl font-bold uppercase tracking-wide">Your water, in real time.</h3>
+                <p class="mt-4 max-w-xl text-sm text-white/60">
                   Simple quality indicators make the system feel calm and premium instead of technical.
                 </p>
               </div>
               <div class="grid grid-cols-2 gap-3">
-                <div class="rounded-2xl bg-zinc-100 p-5 text-center"><p class="text-2xl font-bold">TDS</p><p class="mt-1 text-[11px] text-zinc-500">Live monitoring</p></div>
-                <div class="rounded-2xl bg-zinc-100 p-5 text-center"><p class="text-2xl font-bold text-green-500">Good</p><p class="mt-1 text-[11px] text-zinc-500">Water quality</p></div>
-                <div class="rounded-2xl bg-zinc-100 p-5 text-center"><p class="text-2xl font-bold">6mo</p><p class="mt-1 text-[11px] text-zinc-500">Filter life</p></div>
-                <div class="rounded-2xl bg-zinc-100 p-5 text-center"><p class="text-2xl font-bold text-blue-600">7.8</p><p class="mt-1 text-[11px] text-zinc-500">Current pH</p></div>
+                <div class="rounded-2xl bg-white/10 p-5 text-center ring-1 ring-white/10"><p class="text-2xl font-bold">TDS</p><p class="mt-1 text-[11px] text-white/45">Live monitoring</p></div>
+                <div class="rounded-2xl bg-white/10 p-5 text-center ring-1 ring-white/10"><p class="text-2xl font-bold text-green-400">Good</p><p class="mt-1 text-[11px] text-white/45">Water quality</p></div>
+                <div class="rounded-2xl bg-white/10 p-5 text-center ring-1 ring-white/10"><p><span class="font-number text-2xl tracking-wide">6</span><span class="text-2xl font-bold">mo</span></p><p class="mt-1 text-[11px] text-white/45">Filter life</p></div>
+                <div class="rounded-2xl bg-white/10 p-5 text-center ring-1 ring-white/10"><p class="font-number text-2xl tracking-wide text-blue-300">7.8</p><p class="mt-1 text-[11px] text-white/45">Current pH</p></div>
               </div>
             </div>
           </article>
+          <div id="performance" class="grid overflow-hidden rounded-[1.25rem] bg-white shadow-sm ring-1 ring-zinc-200 md:col-span-2 sm:grid-cols-3">
+            {
+              numbers.map((item, index) => (
+                <div class="relative px-8 py-14 text-center">
+                  {index > 0 && <span class="absolute left-6 right-6 top-0 h-px bg-gradient-to-r from-transparent via-zinc-200 to-transparent sm:bottom-8 sm:left-0 sm:right-auto sm:top-8 sm:h-auto sm:w-px sm:bg-gradient-to-b" />}
+                  <p class="font-number text-gradient text-6xl tracking-wide sm:text-7xl">{item.value}</p>
+                  <p class="mx-auto mt-4 max-w-48 text-sm leading-6 text-zinc-500">{item.label}</p>
+                </div>
+              ))
+            }
+          </div>
         </div>
       </div>
     </section>
@@ -394,7 +399,7 @@ const plans = [
       <div class="mx-auto max-w-7xl">
         <div class="mb-14 text-center">
           <p class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Why Stealth</p>
-          <h2 class="mt-3 font-display text-4xl font-normal uppercase tracking-wide sm:text-5xl">Every detail matters.</h2>
+          <h2 class="mt-3 text-4xl font-black uppercase tracking-wide sm:text-5xl">Every detail matters.</h2>
         </div>
         <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {
@@ -403,8 +408,10 @@ const plans = [
                 <div class="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
                   <Icon class="h-6 w-6" />
                 </div>
-                <h3 class="font-display text-base font-normal uppercase tracking-wide">{title}</h3>
-                <p class="mt-2 text-sm leading-6 text-zinc-500">{body}</p>
+                <h3 class="text-base font-bold uppercase tracking-wide">{title}</h3>
+                <p class="mt-2 text-sm leading-6 text-zinc-500">
+                  {textParts(body).map((part) => (isNumberToken(part) ? <span class="font-number">{part}</span> : part))}
+                </p>
               </article>
             ))
           }
@@ -416,7 +423,7 @@ const plans = [
       <div class="mx-auto max-w-4xl">
         <div class="mb-16 text-center">
           <p class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Bring Stealth into your home</p>
-          <h2 class="mt-3 font-display text-4xl font-normal uppercase tracking-wide sm:text-6xl">
+          <h2 class="mt-3 text-4xl font-black uppercase tracking-wide sm:text-6xl">
             Choose your Stealth.
           </h2>
         </div>
@@ -435,9 +442,11 @@ const plans = [
                     Most Popular
                   </div>
                 )}
-                <h3 class="font-display text-xl font-normal uppercase tracking-wide">{plan.name}</h3>
+                <h3 class="text-xl font-bold uppercase tracking-wide">
+                  {textParts(plan.name).map((part) => (isNumberToken(part) ? <span class="font-number">{part}</span> : part))}
+                </h3>
                 <p class="mt-2 text-sm leading-6 text-zinc-500">{plan.description}</p>
-                <p class="mt-6 text-6xl font-bold tracking-[-0.05em]"><span class="align-super text-2xl">$</span>{plan.price}</p>
+                <p class="mt-6 font-number text-6xl tracking-wide"><span class="align-super text-2xl">$</span>{plan.price}</p>
                 <p class="mt-1 text-sm text-zinc-500">starting estimate</p>
                 <ul class="mt-8 grid gap-3">
                   {plan.features.map((feature) => (
@@ -445,7 +454,7 @@ const plans = [
                       <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-green-500 text-white">
                         <Check class="h-3 w-3" />
                       </span>
-                      {feature}
+                      {textParts(feature).map((part) => (isNumberToken(part) ? <span class="font-number">{part}</span> : part))}
                     </li>
                   ))}
                 </ul>
@@ -456,14 +465,14 @@ const plans = [
                     plan.popular ? 'bg-blue-600 text-white hover:bg-blue-500' : 'border border-blue-600 text-blue-600 hover:bg-blue-50',
                   ]}
                 >
-                  {plan.cta}
+                  {textParts(plan.cta).map((part) => (isNumberToken(part) ? <span class="font-number">{part}</span> : part))}
                 </a>
               </article>
             ))
           }
         </div>
 
-        <p class="mt-8 text-center text-sm leading-7 text-zinc-500">
+        <p class="mt-8 text-center text-sm text-zinc-500">
           Free consultation · Home-focused setup · Support from real people · Donation options available
         </p>
       </div>
@@ -473,7 +482,7 @@ const plans = [
       <div class="mx-auto max-w-4xl">
         <div class="mb-12 text-center">
           <p class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">The Stealth difference</p>
-          <h2 class="mt-3 font-display text-4xl font-normal uppercase tracking-wide">Stealth vs. the alternatives.</h2>
+          <h2 class="mt-3 text-4xl font-black uppercase tracking-wide">Stealth vs. the alternatives.</h2>
         </div>
         <div class="overflow-hidden rounded-2xl ring-1 ring-zinc-200">
           <table class="w-full border-collapse text-left text-sm">
@@ -499,7 +508,7 @@ const plans = [
       <div class="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
           <p class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Contact</p>
-          <h2 class="mt-3 font-display text-4xl font-normal uppercase tracking-wide">Bring Stealth into your home.</h2>
+          <h2 class="mt-3 text-4xl font-black uppercase tracking-wide">Bring Stealth into your home.</h2>
           <p class="mt-5 text-lg leading-8 text-zinc-500">
             Request product details, pricing, and setup information. Netlify will capture the submission when deployed.
           </p>
@@ -548,7 +557,7 @@ const plans = [
             <div>
               <p class="mb-3 text-xs font-semibold text-white/65">{group}</p>
               <ul class="grid gap-2">
-                <li><a href="#pricing" class="text-xs text-white/40 hover:text-white/80">Stealth S1000</a></li>
+                <li><a href="#pricing" class="text-xs text-white/40 hover:text-white/80">Stealth S<span class="font-number">1000</span></a></li>
                 <li><a href="#tech" class="text-xs text-white/40 hover:text-white/80">How it works</a></li>
                 <li><a href="#contact" class="text-xs text-white/40 hover:text-white/80">Contact</a></li>
               </ul>
@@ -557,7 +566,7 @@ const plans = [
         }
       </div>
       <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p class="text-xs text-white/30">Copyright © 2026 Stealth Water Systems. All rights reserved.</p>
+        <p class="text-xs text-white/30">Copyright © <span class="font-number">2026</span> Stealth Water Systems. All rights reserved.</p>
         <p class="text-base font-semibold text-white/55">Stealth</p>
       </div>
     </div>
