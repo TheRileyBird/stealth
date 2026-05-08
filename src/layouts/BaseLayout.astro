@@ -1,0 +1,23 @@
+---
+import '../styles/global.css';
+
+const {
+  title = 'Stealth Detox Water',
+  description = 'Stealth Detox Water creates chemical-free water systems built to hydrate, detox, and reduce single-use plastic waste.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth bg-black text-white">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://www.youtube-nocookie.com" />
+    <link rel="preconnect" href="https://i.ytimg.com" />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen antialiased">
+    <slot />
+  </body>
+</html>
