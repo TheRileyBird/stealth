@@ -6,13 +6,16 @@ import {
   Check,
   ChevronRight,
   Menu,
-  PackageCheck,
-  ShieldCheck,
-  Truck,
+  MonitorCheck,
+  SlidersHorizontal,
+  Sparkles,
+  Wrench,
   X,
 } from '@lucide/astro';
 import logo from '../assets/images/logo.webp';
 import s1000 from '../assets/images/s1000orig.png';
+import elite from '../assets/images/eliteorig.jpg';
+import micron from '../assets/images/micronaloneorig01.png';
 import water from '../assets/images/water.jpg';
 
 const navItems = [
@@ -93,29 +96,63 @@ const stageColors = [
   'bg-indigo-950',
 ];
 
-const included = [
-  { title: 'Premium support', body: 'Guided setup and clear ownership from day one.', icon: ShieldCheck },
-  { title: 'Fast delivery', body: 'Ships ready for a simple home installation path.', icon: Truck },
-  { title: 'System included', body: 'The S1000 unit and core setup components.', icon: PackageCheck },
-  { title: 'Clean-water trial', body: 'A lower-friction way to experience Stealth at home.', icon: Check },
+const details = [
+  {
+    eyebrow: 'Countertop performance',
+    title: 'Stealth Pro sits where you use it.',
+    body: 'The Pro brings Stealth technology into a visible countertop system for homes that want the full experience without under-counter work.',
+    icon: MonitorCheck,
+  },
+  {
+    eyebrow: 'Built-in upgrade',
+    title: 'Elite disappears under the counter.',
+    body: 'Stealth Elite is the integrated installation path, built for a cleaner counter line and a more permanent whole-kitchen water station.',
+    icon: Wrench,
+  },
+  {
+    eyebrow: 'Micron polishing',
+    title: 'Full Micron sharpens the final pass.',
+    body: 'Add Full Micron for an extra layer of filtration detail when the home calls for a focused upgrade to source-water polish.',
+    icon: Sparkles,
+  },
+  {
+    eyebrow: 'Daily ownership',
+    title: 'Designed for real use.',
+    body: 'Guided setup, filter visibility, and product support keep the system feeling premium after the first glass.',
+    icon: SlidersHorizontal,
+  },
 ];
 
 const plans = [
   {
-    name: 'Stealth S1000',
-    description: 'The essential Stealth experience for homes that want better daily water.',
-    price: '399',
-    cta: 'Request S1000 Info',
+    name: 'Stealth Pro',
+    description: 'The countertop Stealth system for homes that want the full experience in view.',
+    price: '4,350',
+    cta: 'Request Stealth Pro',
     popular: false,
-    features: ['Multi-stage filtration', 'Countertop-ready profile', 'Mineral-balanced output', 'Home support included'],
+    image: s1000,
+    imageAlt: 'Stealth Pro countertop water system',
+    features: ['Countertop installation', 'Stealth technology platform', 'Multi-stage filtration', 'Mineral-balanced output'],
   },
   {
     name: 'Stealth Elite',
-    description: 'A higher-capacity path for families serious about hydration and plastic reduction.',
-    price: '499',
-    cta: 'Request Elite Info',
+    description: 'The under-counter Stealth system for an integrated kitchen setup.',
+    price: '5,345',
+    cta: 'Request Stealth Elite',
     popular: true,
-    features: ['Everything in S1000', 'Higher-flow configuration', 'Priority support', '$250 charity donation option'],
+    image: elite,
+    imageAlt: 'Stealth Elite under-counter water system',
+    features: ['Under-counter installation', 'Integrated kitchen profile', 'Advanced filtration path', 'Premium support'],
+  },
+  {
+    name: 'Full Micron',
+    description: 'Focused micron filtration for homes adding another polish layer.',
+    price: '600',
+    cta: 'Request Full Micron',
+    popular: false,
+    image: micron,
+    imageAlt: 'Full Micron filtration unit',
+    features: ['Micron filtration upgrade', 'Compact add-on profile', 'Source-water polishing', 'Simple replacement path'],
   },
 ];
 
@@ -135,7 +172,7 @@ const isNumberToken = (value) => /\d/.test(value);
     x-data="{
       mobileOpen: false,
       heroProgress: 0,
-      selectedPlan: 'Stealth Elite',
+      selectedPlan: 'Stealth Pro',
       updateHero() {
         const max = window.innerHeight * 1.2;
         this.heroProgress = Math.min(1, Math.max(0, window.scrollY / max));
@@ -234,7 +271,7 @@ const isNumberToken = (value) => /\d/.test(value);
           >
             <Image
               src={s1000}
-              alt="Stealth S1000 water system"
+              alt="Stealth Pro countertop water system"
               class="mx-auto h-auto w-full max-w-[21rem] drop-shadow-[0_44px_80px_rgba(0,0,0,0.85)] sm:max-w-[26rem]"
               loading="eager"
             />
@@ -248,7 +285,7 @@ const isNumberToken = (value) => /\d/.test(value);
         <div class="mb-16 text-center" x-data="{ visible: false }" x-intersect.once="visible = true" x-bind:class="visible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'" class="transition duration-700">
           <p class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">What Stealth does</p>
           <h2 class="mt-3 text-4xl font-black uppercase tracking-wide sm:text-6xl">
-            Built different.<br />Filtered better.
+            Built different
           </h2>
         </div>
 
@@ -355,9 +392,9 @@ const isNumberToken = (value) => /\d/.test(value);
     <section class="bg-zinc-100 px-5 py-24 text-zinc-950 sm:px-8">
       <div class="relative mx-auto max-w-7xl">
         <div class="mx-auto mb-10 max-w-2xl text-center">
-          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Designed for life</p>
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Made to Optimize</p>
           <h2 class="mt-3 text-4xl font-black uppercase tracking-wide sm:text-6xl">
-            Built for wellness
+            Designed for wellness
           </h2>
         </div>
 
@@ -374,7 +411,7 @@ const isNumberToken = (value) => /\d/.test(value);
             <div class="relative">
             <p class="text-xs font-semibold uppercase tracking-[0.16em] text-white/45">Installation</p>
             <h3 class="mt-4 text-3xl font-bold uppercase tracking-wide"><span class="text-gradient">Zero</span> plumber required.</h3>
-            <p class="mt-4 text-sm text-white/60">Designed for a direct setup path without turning your kitchen into a jobsite. Get the S1000 in place, connect the system, and start producing mineral-balanced water at home.</p>
+            <p class="mt-4 text-sm text-white/60">Designed for a direct setup path without turning your kitchen into a jobsite. Get the Stealth Pro in place, connect the system, and start producing mineral-balanced water at home.</p>
             <a href="#pricing" class="mt-6 inline-flex items-center gap-1 text-sm font-medium text-white/75 hover:text-white hover:underline">
               Get started
               <ChevronRight class="h-4 w-4" />
@@ -415,21 +452,33 @@ const isNumberToken = (value) => /\d/.test(value);
       </div>
     </section>
 
-    <section class="bg-white px-5 py-24 text-zinc-950 sm:px-8">
+    <section class="relative overflow-hidden bg-zinc-950 px-5 py-24 text-white sm:px-8">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(59,130,246,0.24),transparent_34%),linear-gradient(135deg,rgba(165,243,252,0.08),transparent_36%)]"></div>
+      <div class="hero-grain absolute inset-0 opacity-[0.05] mix-blend-overlay"></div>
       <div class="mx-auto max-w-7xl">
-        <div class="mb-14 text-center">
-          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Why Stealth</p>
-          <h2 class="mt-3 text-4xl font-black uppercase tracking-wide sm:text-5xl">Every detail matters.</h2>
+        <div class="relative mb-14 max-w-3xl">
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-white/45">System details</p>
+          <h2 class="mt-3 text-4xl font-black uppercase tracking-wide sm:text-5xl">For the <span class="text-gradient">Elite</span></h2>
+          <p class="mt-5 max-w-2xl text-sm text-white/60">
+            Stealth is not one generic box. Choose the countertop Pro, the under-counter Elite, or Full Micron filtration depending on how permanent and polished the installation needs to feel.
+          </p>
         </div>
-        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="relative grid gap-3 md:grid-cols-2">
           {
-            included.map(({ title, body, icon: Icon }) => (
-              <article class="rounded-[1.25rem] bg-white p-8 text-center shadow-sm ring-1 ring-zinc-200">
-                <div class="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
-                  <Icon class="h-6 w-6" />
+            details.map(({ eyebrow, title, body, icon: Icon }, index) => (
+              <article
+                class:list={[
+                  'relative overflow-hidden rounded-[1.25rem] p-8 shadow-sm ring-1 transition duration-500 ease-out hover:-translate-y-1',
+                  index === 1 ? 'bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 text-white' : 'bg-white/8 text-white ring-white/10 hover:bg-white/10 hover:ring-blue-400/40',
+                ]}
+              >
+                <div class="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/70 to-transparent"></div>
+                <div class:list={['flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em]', index === 1 ? 'text-blue-600' : 'text-blue-300']}>
+                  <Icon class="h-4 w-4" />
+                  <p>{eyebrow}</p>
                 </div>
-                <h3 class="text-base font-bold uppercase tracking-wide">{title}</h3>
-                <p class="mt-2 text-sm leading-6 text-zinc-500">
+                <h3 class="mt-2 text-2xl font-bold uppercase tracking-wide">{title}</h3>
+                <p class:list={['mt-3 text-sm leading-6', index === 1 ? 'text-zinc-500' : 'text-white/60']}>
                   {textParts(body).map((part) => (isNumberToken(part) ? <span class="font-number">{part}</span> : part))}
                 </p>
               </article>
@@ -440,7 +489,7 @@ const isNumberToken = (value) => /\d/.test(value);
     </section>
 
     <section id="pricing" class="bg-zinc-100 px-5 py-24 text-zinc-950 sm:px-8">
-      <div class="mx-auto max-w-4xl">
+      <div class="mx-auto max-w-7xl">
         <div class="mb-16 text-center">
           <p class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Bring Stealth into your home</p>
           <h2 class="mt-3 text-4xl font-black uppercase tracking-wide sm:text-6xl">
@@ -448,29 +497,44 @@ const isNumberToken = (value) => /\d/.test(value);
           </h2>
         </div>
 
-        <div class="grid gap-4 md:grid-cols-2">
+        <div class="grid gap-4 pt-5 lg:grid-cols-3">
           {
             plans.map((plan) => (
               <article
                 class:list={[
-                  'relative rounded-[1.25rem] bg-white p-10 ring-2 transition hover:shadow-xl',
-                  plan.popular ? 'ring-blue-600' : 'ring-transparent hover:ring-blue-600',
+                  'group relative rounded-[1.25rem] p-8 pt-10 transition duration-500 ease-out hover:-translate-y-1 hover:shadow-xl',
+                  plan.popular
+                    ? 'bg-zinc-950 text-white shadow-xl shadow-purple-950/30 ring-1 ring-white/10 hover:shadow-[0_24px_80px_rgba(88,28,135,0.42)]'
+                    : 'bg-white text-zinc-950 ring-2 ring-transparent hover:ring-blue-600',
                 ]}
               >
+                <div class="product-hover-glow"></div>
                 {plan.popular && (
-                  <div class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white">
+                  <div class="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-[70%] rounded-full bg-gradient-to-r from-fuchsia-500 via-violet-500 to-blue-500 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white shadow-lg shadow-purple-950/30">
                     Most Popular
                   </div>
                 )}
+                <div class:list={['mb-7 flex h-56 items-center justify-center overflow-hidden rounded-2xl p-5', plan.popular ? 'bg-white/10 ring-1 ring-white/10' : 'bg-zinc-100']}>
+                  <Image
+                    src={plan.image}
+                    alt={plan.imageAlt}
+                    class:list={[
+                      'h-full w-full object-contain',
+                      plan.name === 'Stealth Elite' ? 'rounded-xl object-cover' : '',
+                    ]}
+                    widths={[360, 520, 720]}
+                    sizes="(min-width: 1024px) 28vw, 90vw"
+                  />
+                </div>
                 <h3 class="text-xl font-bold uppercase tracking-wide">
                   {textParts(plan.name).map((part) => (isNumberToken(part) ? <span class="font-number">{part}</span> : part))}
                 </h3>
-                <p class="mt-2 text-sm leading-6 text-zinc-500">{plan.description}</p>
+                <p class:list={['mt-2 text-sm leading-6', plan.popular ? 'text-white/60' : 'text-zinc-500']}>{plan.description}</p>
                 <p class="mt-6 font-number text-6xl tracking-wide"><span class="align-super text-2xl">$</span>{plan.price}</p>
-                <p class="mt-1 text-sm text-zinc-500">starting estimate</p>
+                <p class:list={['mt-1 text-sm', plan.popular ? 'text-white/45' : 'text-zinc-500']}>{plan.name === 'Full Micron' ? 'add-on price' : 'system price'}</p>
                 <ul class="mt-8 grid gap-3">
                   {plan.features.map((feature) => (
-                    <li class="flex items-center gap-3 text-sm text-zinc-800">
+                    <li class:list={['flex items-center gap-3 text-sm', plan.popular ? 'text-white/75' : 'text-zinc-800']}>
                       <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-green-500 text-white">
                         <Check class="h-3 w-3" />
                       </span>
@@ -481,7 +545,7 @@ const isNumberToken = (value) => /\d/.test(value);
                 <a
                   href="#contact"
                   class:list={[
-                    'mt-8 inline-flex w-full items-center justify-center rounded-xl px-5 py-3 text-base font-medium transition',
+                    'mt-8 inline-flex w-full items-center justify-center rounded-xl px-5 py-3 text-base font-medium transition duration-300',
                     plan.popular ? 'bg-blue-600 text-white hover:bg-blue-500' : 'border border-blue-600 text-blue-600 hover:bg-blue-50',
                   ]}
                 >
@@ -493,7 +557,7 @@ const isNumberToken = (value) => /\d/.test(value);
         </div>
 
         <p class="mt-8 text-center text-sm text-zinc-500">
-          Free consultation · Home-focused setup · Support from real people · Donation options available
+          Consultation available · Countertop and under-counter paths · Product support from real people
         </p>
       </div>
     </section>
@@ -524,14 +588,21 @@ const isNumberToken = (value) => /\d/.test(value);
       </div>
     </section>
 
-    <section id="contact" class="bg-zinc-100 px-5 py-24 text-zinc-950 sm:px-8">
-      <div class="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+    <section id="contact" class="relative overflow-hidden bg-zinc-950 px-5 py-24 text-white sm:px-8">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.22),transparent_32%),linear-gradient(135deg,rgba(165,243,252,0.08),transparent_38%)]"></div>
+      <div class="hero-grain absolute inset-0 opacity-[0.05] mix-blend-overlay"></div>
+      <div class="relative mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
-          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Contact</p>
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-white/45">Contact</p>
           <h2 class="mt-3 text-4xl font-black uppercase tracking-wide">Bring Stealth into your home.</h2>
-          <p class="mt-5 text-lg leading-8 text-zinc-500">
-            Request product details, pricing, and setup information. Netlify will capture the submission when deployed.
+          <p class="mt-5 text-lg leading-8 text-white/60">
+            Request product details, pricing, and setup information for Stealth Pro, Stealth Elite, or Full Micron.
           </p>
+          <div class="mt-8 grid gap-3 text-sm text-white/55">
+            <p><span class="font-semibold text-white">Countertop:</span> Stealth Pro consultation.</p>
+            <p><span class="font-semibold text-white">Under-counter:</span> Elite installation path.</p>
+            <p><span class="font-semibold text-white">Add-on:</span> Full Micron filtration upgrade.</p>
+          </div>
         </div>
 
         <form
@@ -539,25 +610,26 @@ const isNumberToken = (value) => /\d/.test(value);
           method="POST"
           data-netlify="true"
           netlify-honeypot="company_site"
-          class="rounded-[1.25rem] bg-white p-8 shadow-sm ring-1 ring-zinc-200"
+          class="relative overflow-hidden rounded-[1.25rem] bg-white/10 p-8 shadow-xl shadow-black/20 ring-1 ring-white/10 backdrop-blur-xl"
         >
+          <div class="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-blue-300/80 to-transparent"></div>
           <input type="hidden" name="form-name" value="stealth-inquiry" />
           <p class="hidden"><label>Company site <input name="company_site" /></label></p>
-          <div class="grid gap-5 sm:grid-cols-2">
+          <div class="relative grid gap-5 sm:grid-cols-2">
             <label class="grid gap-2">
-              <span class="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">Name</span>
-              <input name="name" required class="rounded-xl bg-zinc-100 px-4 py-3 text-sm font-medium outline-none ring-blue-500 transition focus:ring-2" />
+              <span class="text-xs font-semibold uppercase tracking-[0.16em] text-white/45">Name</span>
+              <input name="name" required class="rounded-xl bg-white/10 px-4 py-3 text-sm font-medium text-white outline-none ring-1 ring-white/10 transition placeholder:text-white/30 focus:ring-2 focus:ring-blue-400" />
             </label>
             <label class="grid gap-2">
-              <span class="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">Email</span>
-              <input type="email" name="email" required class="rounded-xl bg-zinc-100 px-4 py-3 text-sm font-medium outline-none ring-blue-500 transition focus:ring-2" />
+              <span class="text-xs font-semibold uppercase tracking-[0.16em] text-white/45">Email</span>
+              <input type="email" name="email" required class="rounded-xl bg-white/10 px-4 py-3 text-sm font-medium text-white outline-none ring-1 ring-white/10 transition placeholder:text-white/30 focus:ring-2 focus:ring-blue-400" />
             </label>
             <label class="grid gap-2 sm:col-span-2">
-              <span class="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">Message</span>
-              <textarea name="message" rows="5" class="resize-none rounded-xl bg-zinc-100 px-4 py-3 text-sm font-medium outline-none ring-blue-500 transition focus:ring-2"></textarea>
+              <span class="text-xs font-semibold uppercase tracking-[0.16em] text-white/45">Message</span>
+              <textarea name="message" rows="5" class="resize-none rounded-xl bg-white/10 px-4 py-3 text-sm font-medium text-white outline-none ring-1 ring-white/10 transition placeholder:text-white/30 focus:ring-2 focus:ring-blue-400"></textarea>
             </label>
           </div>
-          <button type="submit" class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-base font-medium text-white transition hover:bg-blue-500 sm:w-auto">
+          <button type="submit" class="relative mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-base font-medium text-white transition hover:bg-blue-500 sm:w-auto">
             Send Inquiry
             <ArrowRight class="h-4 w-4" />
           </button>
@@ -566,18 +638,23 @@ const isNumberToken = (value) => /\d/.test(value);
     </section>
   </main>
 
-  <footer class="bg-zinc-900 px-5 py-12 text-white sm:px-8">
+  <footer class="bg-[#050706] px-5 py-14 text-white sm:px-8">
     <div class="mx-auto max-w-7xl">
-      <p class="mb-10 max-w-2xl text-xs leading-6 text-white/30">
-        Product performance varies by local water conditions and installation. Claims should be validated with final product documentation before launch.
-      </p>
+      <div class="mb-10 flex flex-col gap-6 border-b border-white/10 pb-10 lg:flex-row lg:items-start lg:justify-between">
+        <div>
+          <Image src={logo} alt="Stealth Detox Water" class="h-auto w-36" />
+        </div>
+        <a href="#contact" class="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-medium text-zinc-950 transition hover:bg-blue-50">
+          Start consultation
+        </a>
+      </div>
       <div class="grid gap-8 border-b border-white/10 pb-10 sm:grid-cols-2 lg:grid-cols-4">
         {
           ['Shop', 'Learn', 'Support', 'Company'].map((group) => (
             <div>
               <p class="mb-3 text-xs font-semibold text-white/65">{group}</p>
               <ul class="grid gap-2">
-                <li><a href="#pricing" class="text-xs text-white/40 hover:text-white/80">Stealth S<span class="font-number">1000</span></a></li>
+                <li><a href="#pricing" class="text-xs text-white/40 hover:text-white/80">Stealth Pro</a></li>
                 <li><a href="#tech" class="text-xs text-white/40 hover:text-white/80">How it works</a></li>
                 <li><a href="#contact" class="text-xs text-white/40 hover:text-white/80">Contact</a></li>
               </ul>

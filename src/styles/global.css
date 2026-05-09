@@ -45,3 +45,23 @@
     background-position: 100% 50%;
   }
 }
+
+.product-hover-glow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 22% 15%, rgba(165, 243, 252, 0.12), transparent 30%),
+    radial-gradient(circle at 82% 14%, rgba(192, 132, 252, 0.34), transparent 28%),
+    radial-gradient(circle at 50% 110%, rgba(124, 58, 237, 0.24), transparent 36%),
+    linear-gradient(135deg, rgba(124, 58, 237, 0.22), rgba(37, 99, 235, 0.1), rgba(34, 211, 238, 0.06), transparent 60%);
+  opacity: 0;
+  transition: opacity 450ms ease, transform 450ms ease;
+  transform: scale(0.98);
+}
+
+.group:hover .product-hover-glow {
+  opacity: 1;
+  transform: scale(1);
+}
