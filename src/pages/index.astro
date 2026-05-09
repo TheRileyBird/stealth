@@ -17,6 +17,7 @@ import s1000 from '../assets/images/s1000orig.png';
 import elite from '../assets/images/eliteorig.jpg';
 import micron from '../assets/images/micronaloneorig01.png';
 import water from '../assets/images/water.jpg';
+import store from '../assets/images/buff.jpeg';
 
 const navItems = [
   { label: 'Overview', href: '#highlights' },
@@ -43,6 +44,8 @@ const highlights = [
     eyebrow: 'Smart guidance',
     title: 'It learns your water.',
     body: 'Live quality indicators track output and filter life, so the system stays easy to understand without turning hydration into homework.',
+    image: store,
+    imageAlt: 'Stealth water systems on display in a store',
   },
   {
     eyebrow: 'Daily impact',
@@ -291,27 +294,41 @@ const isNumberToken = (value) => /\d/.test(value);
 
         <div class="grid gap-3 md:grid-cols-2">
           {
-            highlights.map((item) => (
+            highlights.map((item, index) => (
               <article
                 class:list={[
-                  'rounded-[1.25rem] p-10 transition duration-300 hover:-translate-y-1',
+                  'rounded-[1.25rem] transition duration-300 hover:-translate-y-1',
+                  item.image ? 'aspect-square overflow-hidden bg-white' : 'p-10',
+                  index === 3 ? 'aspect-square content-center' : '',
                   item.dark ? 'bg-zinc-900 text-white' : item.blue ? 'bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 text-white' : 'bg-white text-zinc-950',
                 ]}
                 x-data="{ visible: false }"
                 x-intersect.once="visible = true"
                 x-bind:class="visible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'"
               >
-                <p class:list={['mb-3 text-xs font-semibold uppercase tracking-[0.16em]', item.dark || item.blue ? 'text-white/45' : 'text-zinc-500']}>
-                  {item.eyebrow}
-                </p>
-                {item.stat && <p class="font-number text-gradient text-7xl tracking-wide">{item.stat}</p>}
-                <h3 class="mt-4 text-3xl font-bold uppercase tracking-wide">{item.title}</h3>
-                <p class:list={['mt-4 text-sm', item.dark || item.blue ? 'text-white/60' : 'text-zinc-500']}>{item.body}</p>
-                {item.blue && (
-                  <a href="#tech" class="mt-6 inline-flex items-center gap-1 text-sm font-medium text-blue-400 hover:underline">
-                    Learn the science
-                    <ChevronRight class="h-4 w-4" />
-                  </a>
+                {item.image ? (
+                  <Image
+                    src={item.image}
+                    alt={item.imageAlt}
+                    class="h-full min-h-[22rem] w-full object-cover object-top"
+                    widths={[640, 960, 1280]}
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                  />
+                ) : (
+                  <>
+                    <p class:list={['mb-3 text-xs font-semibold uppercase tracking-[0.16em]', item.dark || item.blue ? 'text-white/45' : 'text-zinc-500']}>
+                      {item.eyebrow}
+                    </p>
+                    {item.stat && <p class="font-number text-gradient text-7xl tracking-wide">{item.stat}</p>}
+                    <h3 class="mt-4 text-3xl font-bold uppercase tracking-wide">{item.title}</h3>
+                    <p class:list={['mt-4 text-sm', item.dark || item.blue ? 'text-white/60' : 'text-zinc-500']}>{item.body}</p>
+                    {item.blue && (
+                      <a href="#tech" class="mt-6 inline-flex items-center gap-1 text-sm font-medium text-blue-400 hover:underline">
+                        Learn the science
+                        <ChevronRight class="h-4 w-4" />
+                      </a>
+                    )}
+                  </>
                 )}
               </article>
             ))
