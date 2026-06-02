@@ -1,0 +1,252 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import { ArrowLeft, ArrowRight, Check, Minus, Plus, ShoppingBag } from '@lucide/astro';
+import logo from '../../assets/images/logo.webp';
+import { products } from '../../data/products.js';
+
+export function getStaticPaths() {
+  return products.map((product) => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+const money = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 0,
+});
+---
+
+<BaseLayout title={`${product.name} — Stealth Detox Water`} description={product.summary}>
+  <main
+    x-data="{
+      quantity: 1,
+      added: false,
+      cartCount: 0,
+      init() {
+        const cart = JSON.parse(localStorage.getItem('stealth-cart') || '[]');
+        this.cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+      },
+      addToCart(button) {
+        const cart = JSON.parse(localStorage.getItem('stealth-cart') || '[]');
+        const existing = cart.find((item) => item.slug === button.dataset.slug);
+        if (existing) existing.quantity += this.quantity;
+        else cart.push({ slug: button.dataset.slug, name: button.dataset.name, price: Number(button.dataset.price), quantity: this.quantity });
+        localStorage.setItem('stealth-cart', JSON.stringify(cart));
+        this.cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+        this.added = true;
+      }
+    }"
+    class="min-h-screen bg-zinc-100 text-zinc-950"
+  >
+    <header class="border-b border-white/10 bg-[#050706] text-white">
+      <div class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-5 px-5 sm:px-8">
+        <a href="/" aria-label="Stealth Detox Water home">
+          <Image src={logo} alt="Stealth Detox Water" class="h-auto w-28" loading="eager" />
+        </a>
+
+        <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary navigation">
+          <a href="/#highlights" class="text-xs font-medium text-white/70 transition hover:text-white">Overview</a>
+          <a href="/#tech" class="text-xs font-medium text-white/70 transition hover:text-white">Technology</a>
+          <a href="/#performance" class="text-xs font-medium text-white/70 transition hover:text-white">Performance</a>
+          <a href="/#pricing" class="text-xs font-medium text-white/70 transition hover:text-white">Buy</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <a href="/#pricing" class="hidden rounded-full bg-blue-600 px-4 py-1.5 text-xs font-medium text-white transition hover:bg-blue-500 sm:inline-flex">
+            Shop Stealth
+          </a>
+          <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 text-xs font-medium">
+            <ShoppingBag class="h-4 w-4" />
+            Cart <span class="font-number" x-text="cartCount">0</span>
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <section class="px-5 py-10 sm:px-8 sm:py-16">
+      <div class="mx-auto max-w-7xl">
+        <a href="/#pricing" class="inline-flex items-center gap-2 text-sm font-medium text-zinc-500 transition hover:text-zinc-950">
+          <ArrowLeft class="h-4 w-4" />
+          Back to products
+        </a>
+
+        <div class="mt-8 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+          <div class="relative flex min-h-[28rem] items-center justify-center overflow-hidden rounded-[1.5rem] bg-white p-8 shadow-sm ring-1 ring-zinc-200 sm:min-h-[38rem]">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_75%_20%,rgba(59,130,246,0.14),transparent_32%),radial-gradient(circle_at_20%_80%,rgba(34,211,238,0.1),transparent_28%)]"></div>
+            <Image
+              src={product.image}
+              alt={product.imageAlt}
+              class:list={['relative max-h-[32rem] w-full object-contain', product.slug === 'stealth-elite' ? 'rounded-2xl object-cover shadow-xl' : '']}
+              widths={[640, 960, 1280]}
+              sizes="(min-width: 1024px) 48vw, 90vw"
+              loading="eager"
+            />
+          </div>
+
+          <div class="lg:pt-6">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600">{product.eyebrow}</p>
+            <h1 class="mt-3 text-5xl font-black uppercase tracking-wide sm:text-6xl">{product.name}</h1>
+            <p class="mt-3 inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-blue-700">{product.badge}</p>
+            <p class="mt-7 font-number text-6xl tracking-wide">{money.format(product.price)}</p>
+            <p class="mt-1 text-sm text-zinc-500">{product.slug === 'full-micron' ? 'add-on price' : 'system price'}</p>
+            <p class="mt-7 max-w-xl text-base leading-7 text-zinc-600">{product.description}</p>
+
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div class="inline-flex h-12 w-fit items-center overflow-hidden rounded-xl border border-zinc-200 bg-white">
+                <button type="button" class="flex h-full w-12 items-center justify-center text-zinc-500 transition hover:bg-zinc-50 hover:text-zinc-950" x-on:click="quantity = Math.max(1, quantity - 1)" aria-label="Decrease quantity">
+                  <Minus class="h-4 w-4" />
+                </button>
+                <span class="font-number w-10 text-center text-sm" x-text="quantity">1</span>
+                <button type="button" class="flex h-full w-12 items-center justify-center text-zinc-500 transition hover:bg-zinc-50 hover:text-zinc-950" x-on:click="quantity += 1" aria-label="Increase quantity">
+                  <Plus class="h-4 w-4" />
+                </button>
+              </div>
+              <button
+                type="button"
+                data-slug={product.slug}
+                data-name={product.name}
+                data-price={product.price}
+                x-on:click="addToCart($el)"
+                class="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 px-7 text-base font-medium text-white transition hover:bg-blue-500"
+              >
+                <ShoppingBag class="h-4 w-4" />
+                <span x-text="added ? 'Added to cart' : 'Add to cart'">Add to cart</span>
+              </button>
+            </div>
+            <p x-show="added" x-transition class="mt-3 text-sm font-medium text-green-700">
+              Added. Your cart is saved in this browser.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-zinc-950 px-5 py-20 text-white sm:px-8">
+      <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_0.8fr]">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-white/45">Included</p>
+          <h2 class="mt-3 text-3xl font-black uppercase tracking-wide sm:text-4xl">Built for daily use.</h2>
+          <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+            {product.features.map((feature) => (
+              <li class="flex items-center gap-3 text-sm text-white/70">
+                <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-500 text-white"><Check class="h-3 w-3" /></span>
+                {feature}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/5">
+          {product.specs.map(([label, value]) => (
+            <div class="flex items-center justify-between gap-5 border-b border-white/10 px-6 py-5 last:border-b-0">
+              <span class="text-xs font-semibold uppercase tracking-[0.14em] text-white/40">{label}</span>
+              <span class="text-right text-sm font-medium text-white/85">{value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="relative overflow-hidden bg-zinc-950 px-5 py-24 text-white sm:px-8">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.22),transparent_32%),linear-gradient(135deg,rgba(165,243,252,0.08),transparent_38%)]"></div>
+      <div class="hero-grain absolute inset-0 opacity-[0.05] mix-blend-overlay"></div>
+      <div class="relative mx-auto grid max-w-6xl gap-10 border-t border-white/10 pt-20 lg:grid-cols-[0.8fr_1.2fr]">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-[0.18em] text-white/45">Contact</p>
+          <h2 class="mt-3 text-4xl font-black uppercase tracking-wide">Questions about {product.name}?</h2>
+          <p class="mt-5 text-lg leading-8 text-white/60">
+            Ask about setup, product details, and the right Stealth path for your home.
+          </p>
+          <div class="mt-8 grid gap-3 text-sm text-white/55">
+            <p><span class="font-semibold text-white">Countertop:</span> Stealth Pro consultation.</p>
+            <p><span class="font-semibold text-white">Under-counter:</span> Elite installation path.</p>
+            <p><span class="font-semibold text-white">Add-on:</span> Full Micron filtration upgrade.</p>
+          </div>
+        </div>
+
+        <form
+          name={`stealth-${product.slug}-inquiry`}
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="company_site"
+          class="relative overflow-hidden rounded-[1.25rem] bg-white/10 p-8 shadow-xl shadow-black/20 ring-1 ring-white/10 backdrop-blur-xl"
+        >
+          <div class="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-blue-300/80 to-transparent"></div>
+          <input type="hidden" name="form-name" value={`stealth-${product.slug}-inquiry`} />
+          <input type="hidden" name="product" value={product.name} />
+          <p class="hidden"><label>Company site <input name="company_site" /></label></p>
+          <div class="relative grid gap-5 sm:grid-cols-2">
+            <label class="grid gap-2">
+              <span class="text-xs font-semibold uppercase tracking-[0.16em] text-white/45">Name</span>
+              <input name="name" required class="rounded-xl bg-white/10 px-4 py-3 text-sm font-medium text-white outline-none ring-1 ring-white/10 transition placeholder:text-white/30 focus:ring-2 focus:ring-blue-400" />
+            </label>
+            <label class="grid gap-2">
+              <span class="text-xs font-semibold uppercase tracking-[0.16em] text-white/45">Email</span>
+              <input type="email" name="email" required class="rounded-xl bg-white/10 px-4 py-3 text-sm font-medium text-white outline-none ring-1 ring-white/10 transition placeholder:text-white/30 focus:ring-2 focus:ring-blue-400" />
+            </label>
+            <label class="grid gap-2 sm:col-span-2">
+              <span class="text-xs font-semibold uppercase tracking-[0.16em] text-white/45">Message</span>
+              <textarea name="message" rows="5" class="resize-none rounded-xl bg-white/10 px-4 py-3 text-sm font-medium text-white outline-none ring-1 ring-white/10 transition placeholder:text-white/30 focus:ring-2 focus:ring-blue-400"></textarea>
+            </label>
+          </div>
+          <button type="submit" class="relative mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-base font-medium text-white transition hover:bg-blue-500 sm:w-auto">
+            Send Inquiry
+            <ArrowRight class="h-4 w-4" />
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-[#050706] px-5 py-14 text-white sm:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="mb-10 flex flex-col gap-6 border-b border-white/10 pb-10 lg:flex-row lg:items-start lg:justify-between">
+        <a href="/" aria-label="Stealth Detox Water home">
+          <Image src={logo} alt="Stealth Detox Water" class="h-auto w-36" />
+        </a>
+        <a href="#contact" class="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-medium text-zinc-950 transition hover:bg-blue-50">
+          Contact us
+        </a>
+      </div>
+      <div class="grid gap-8 border-b border-white/10 pb-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div>
+          <p class="mb-3 text-xs font-semibold text-white/65">Shop</p>
+          <ul class="grid gap-2">
+            <li><a href="/products/stealth-pro" class="text-xs text-white/40 hover:text-white/80">Stealth Pro</a></li>
+            <li><a href="/products/stealth-elite" class="text-xs text-white/40 hover:text-white/80">Stealth Elite</a></li>
+            <li><a href="/products/full-micron" class="text-xs text-white/40 hover:text-white/80">Full Micron</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="mb-3 text-xs font-semibold text-white/65">Learn</p>
+          <ul class="grid gap-2">
+            <li><a href="/#highlights" class="text-xs text-white/40 hover:text-white/80">Overview</a></li>
+            <li><a href="/#tech" class="text-xs text-white/40 hover:text-white/80">How it works</a></li>
+            <li><a href="/#performance" class="text-xs text-white/40 hover:text-white/80">Performance</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="mb-3 text-xs font-semibold text-white/65">Support</p>
+          <ul class="grid gap-2">
+            <li><a href="#contact" class="text-xs text-white/40 hover:text-white/80">Contact</a></li>
+            <li><a href="/#contact" class="text-xs text-white/40 hover:text-white/80">Product guidance</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="mb-3 text-xs font-semibold text-white/65">Company</p>
+          <ul class="grid gap-2">
+            <li><a href="/" class="text-xs text-white/40 hover:text-white/80">Stealth Detox Water</a></li>
+            <li><a href="/#pricing" class="text-xs text-white/40 hover:text-white/80">All products</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <p class="text-xs text-white/30">Copyright © <span class="font-number">2026</span> Stealth Water Systems. All rights reserved.</p>
+        <p class="text-base font-semibold text-white/55">Stealth</p>
+      </div>
+    </div>
+  </footer>
+</BaseLayout>

@@ -17,7 +17,7 @@ import s1000 from '../assets/images/s1000orig.png';
 import elite from '../assets/images/eliteorig.jpg';
 import micron from '../assets/images/micronaloneorig01.png';
 import water from '../assets/images/water.jpg';
-import store from '../assets/images/buff.jpeg';
+import buff from '../assets/images/buff.jpeg';
 
 const navItems = [
   { label: 'Overview', href: '#highlights' },
@@ -44,14 +44,18 @@ const highlights = [
     eyebrow: 'Smart guidance',
     title: 'It learns your water.',
     body: 'Live quality indicators track output and filter life, so the system stays easy to understand without turning hydration into homework.',
-    image: store,
-    imageAlt: 'Stealth water systems on display in a store',
+    image: buff,
+    imageAlt: 'Person holding a glass of Stealth water',
   },
   {
     eyebrow: 'Daily impact',
-    stat: '0',
-    title: 'Plastic bottles. Ever again.',
-    body: 'Replace the bottled-water routine with a system built for the counter, the kitchen, and the whole household.',
+    impactStats: [
+      { value: '0', label: 'Plastic bottles' },
+      { value: '1', label: 'Simple system' },
+      { value: '2', label: 'Setup paths' },
+    ],
+    title: 'Drink More. Waste Less.',
+    body: 'Skip the cases, refills, delivery runs, and recycling pile. Stealth gives the whole household clean, mineral-balanced water from one daily system built for drinking, cooking, coffee, and bottles on the way out the door.',
     dark: true,
   },
 ];
@@ -129,9 +133,10 @@ const details = [
 const plans = [
   {
     name: 'Stealth Pro',
+    slug: 'stealth-pro',
     description: 'The countertop Stealth system for homes that want the full experience in view.',
     price: '4,350',
-    cta: 'Request Stealth Pro',
+    cta: 'Learn more',
     popular: false,
     image: s1000,
     imageAlt: 'Stealth Pro countertop water system',
@@ -139,9 +144,10 @@ const plans = [
   },
   {
     name: 'Stealth Elite',
+    slug: 'stealth-elite',
     description: 'The under-counter Stealth system for an integrated kitchen setup.',
     price: '5,345',
-    cta: 'Request Stealth Elite',
+    cta: 'Learn more',
     popular: true,
     image: elite,
     imageAlt: 'Stealth Elite under-counter water system',
@@ -149,9 +155,10 @@ const plans = [
   },
   {
     name: 'Full Micron',
+    slug: 'full-micron',
     description: 'Focused micron filtration for homes adding another polish layer.',
     price: '600',
-    cta: 'Request Full Micron',
+    cta: 'Learn more',
     popular: false,
     image: micron,
     imageAlt: 'Full Micron filtration unit',
@@ -179,9 +186,29 @@ const isNumberToken = (value) => /\d/.test(value);
       updateHero() {
         const max = window.innerHeight * 1.2;
         this.heroProgress = Math.min(1, Math.max(0, window.scrollY / max));
+      },
+      updateScrollScaleImages() {
+        const viewportHeight = window.innerHeight;
+
+        document.querySelectorAll('[data-scroll-scale-image]').forEach((image) => {
+          const frame = image.parentElement;
+          const rect = frame.getBoundingClientRect();
+
+          if (rect.bottom < 0 || rect.top > viewportHeight) return;
+
+          const progress = Math.min(1, Math.max(0, (viewportHeight - rect.top) / (viewportHeight + rect.height)));
+          const scale = 1.04 + progress * 0.16;
+
+          image.style.transform = `scale(${scale})`;
+        });
       }
     }"
-    x-init="updateHero(); window.addEventListener('scroll', () => requestAnimationFrame(() => updateHero()), { passive: true })"
+    x-init="
+      updateHero();
+      updateScrollScaleImages();
+      window.addEventListener('scroll', () => requestAnimationFrame(() => { updateHero(); updateScrollScaleImages(); }), { passive: true });
+      window.addEventListener('resize', () => requestAnimationFrame(() => { updateHero(); updateScrollScaleImages(); }), { passive: true });
+    "
     class="bg-black font-sans text-white"
   >
     <header class="sticky top-0 z-50 border-b border-white/10 bg-[#050706] backdrop-blur-xl">
@@ -254,10 +281,10 @@ const isNumberToken = (value) => /\d/.test(value);
 
         <div class="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
-            href="#pricing"
+            href="/products/stealth-pro"
             class="inline-flex items-center justify-center rounded-full bg-blue-600 px-7 py-3 text-base font-medium text-white transition hover:scale-[1.02] hover:bg-blue-500"
           >
-            Shop Now
+            Buy Now
           </a>
           <!--<a href="#highlights" class="inline-flex items-center gap-1 text-base font-normal text-blue-500 hover:underline">-->
           <!--  Learn more-->
@@ -310,7 +337,9 @@ const isNumberToken = (value) => /\d/.test(value);
                   <Image
                     src={item.image}
                     alt={item.imageAlt}
-                    class="h-full min-h-[22rem] w-full object-cover object-top"
+                    class="block h-full w-full object-cover object-top transition-transform duration-100 ease-out will-change-transform"
+                    style="transform: scale(1.04);"
+                    data-scroll-scale-image
                     widths={[640, 960, 1280]}
                     sizes="(min-width: 768px) 50vw, 100vw"
                   />
@@ -322,6 +351,16 @@ const isNumberToken = (value) => /\d/.test(value);
                     {item.stat && <p class="font-number text-gradient text-7xl tracking-wide">{item.stat}</p>}
                     <h3 class="mt-4 text-3xl font-bold uppercase tracking-wide">{item.title}</h3>
                     <p class:list={['mt-4 text-sm', item.dark || item.blue ? 'text-white/60' : 'text-zinc-500']}>{item.body}</p>
+                    {item.impactStats && (
+                      <div class="mt-7 grid gap-2">
+                        {item.impactStats.map((stat) => (
+                          <div class="flex items-center gap-5">
+                            <span class="font-number text-gradient text-5xl tracking-wide">{stat.value}</span>
+                            <span class="text-5xl uppercase font-semibold tracking-wide text-white/70">{stat.label}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                     {item.blue && (
                       <a href="#tech" class="mt-6 inline-flex items-center gap-1 text-sm font-medium text-blue-400 hover:underline">
                         Learn the science
@@ -528,7 +567,7 @@ const isNumberToken = (value) => /\d/.test(value);
                     Most Popular
                   </div>
                 )}
-                <div class:list={['mb-7 flex h-56 items-center justify-center overflow-hidden rounded-2xl p-5', plan.popular ? 'bg-white/10 ring-1 ring-white/10' : 'bg-zinc-100']}>
+                <a href={`/products/${plan.slug}`} class:list={['mb-7 flex h-56 items-center justify-center overflow-hidden rounded-2xl p-5', plan.popular ? 'bg-white/10 ring-1 ring-white/10' : 'bg-zinc-100']} aria-label={`Learn more about ${plan.name}`}>
                   <Image
                     src={plan.image}
                     alt={plan.imageAlt}
@@ -539,9 +578,11 @@ const isNumberToken = (value) => /\d/.test(value);
                     widths={[360, 520, 720]}
                     sizes="(min-width: 1024px) 28vw, 90vw"
                   />
-                </div>
+                </a>
                 <h3 class="text-xl font-bold uppercase tracking-wide">
-                  {textParts(plan.name).map((part) => (isNumberToken(part) ? <span class="font-number">{part}</span> : part))}
+                  <a href={`/products/${plan.slug}`} class="transition hover:text-blue-500">
+                    {textParts(plan.name).map((part) => (isNumberToken(part) ? <span class="font-number">{part}</span> : part))}
+                  </a>
                 </h3>
                 <p class:list={['mt-2 text-sm leading-6', plan.popular ? 'text-white/60' : 'text-zinc-500']}>{plan.description}</p>
                 <p class="mt-6 font-number text-6xl tracking-wide"><span class="align-super text-2xl">$</span>{plan.price}</p>
@@ -557,7 +598,7 @@ const isNumberToken = (value) => /\d/.test(value);
                   ))}
                 </ul>
                 <a
-                  href="#contact"
+                  href={`/products/${plan.slug}`}
                   class:list={[
                     'mt-8 inline-flex w-full items-center justify-center rounded-xl px-5 py-3 text-base font-medium transition duration-300',
                     plan.popular ? 'bg-blue-600 text-white hover:bg-blue-500' : 'border border-blue-600 text-blue-600 hover:bg-blue-50',
